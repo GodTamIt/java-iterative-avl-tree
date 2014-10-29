@@ -8,8 +8,7 @@ import java.util.ArrayList;
  *
  * @author Christopher Tam
  */
-public class AVL<T extends Comparable<T>> implements AVLInterface<T>,
-        Gradable<T> {
+public class AVL<T extends Comparable<T>> implements AVLInterface<T> {
 
     // Do not add additional instance variables
     private Node<T> root = null;
@@ -466,9 +465,30 @@ public class AVL<T extends Comparable<T>> implements AVLInterface<T>,
     public int height() {
         return (this.isEmpty() ? -1 : this.root.getHeight());
     }
-
-    @Override
-    public Node<T> getRoot() {
-        return this.root;
+	
+	@Override
+    public String toString() {
+        StringBuilder build = new StringBuilder(this.size * 3);
+        LinkedList<Node<T>> nodes = new LinkedList<Node<T>>();
+        nodes.add(this.root);
+        Node<T> current;
+        while (!nodes.isEmpty()) {
+            current = nodes.remove();
+            if (current == null) {
+                build.append("\r\n");
+            } else {
+                build.append(current.getData().toString() + " ");
+                if (!nodes.contains(null)) {
+                    nodes.add(null);
+                }
+                if (current.getLeft() != null) {
+                    nodes.add(current.getLeft());
+                }
+                if (current.getRight() != null) {
+                    nodes.add(current.getRight());
+                }
+            }
+        }
+        return build.toString();
     }
 }
